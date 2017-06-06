@@ -2,8 +2,8 @@ import * as types from '../actions/actionTypes';
 import initialState from './initialState';
 
 export default function consensusReducer(state = initialState.consensus, action) {
-	console.log(`reducer:consensusReducer - Called Redux Reducer Action [action.type: ${action.type}] and [state: ${JSON.stringify(state)}]`);
-	console.log(`reducer:consensusReducer - [action.consensus: ${JSON.stringify(action.consensus)}]`);
+	console.log(`reducer:consensusReducer - Called Redux Reducer Action [action.type: ${action.type}] and [state: ${state}]`);
+	console.log(`reducer:consensusReducer - [action.consensus: ${action.consensus}]`);
 
 	switch(action.type) {
 		case types.LOAD_CONSENSUS_SUCCESS:

@@ -411,19 +411,63 @@ class World {
 	}
 }
 
+// Nest dictionary
+// https://stackoverflow.com/questions/5484673/javascript-how-to-dynamically-create-nested-objects-using-object-names-given-by
+let nest = function(obj, keys, v) {
+	if (keys.length === 1) {
+		obj[keys[0]] = v;
+	} else {
+		let key = keys.shift();
+		obj[key] = nest(typeof obj[key] === 'undefined' ? {} : obj[key], keys, v);
+	}
+
+	return obj;
+};
+
 export class ConsensusDemo {
 	constructor () {
 		this.world = new World();
+		this.status = {};
 		this.start();
 	}
 
 	start() {
 		this.world.startRound();
-		return true;
+		this.status = this.getStatus();
+		return this.status;
 	}
 
 	tick() {
 		this.world.tickRound();
-		return true;
+		this.status = this.getStatus();
+		return this.status;
+	}
+
+	getStatus() {
+		let status = {};
+		let group_curr = "";
+		for (let g = 0; g < this.world.groups; ++g) {
+			for (let i = 0; i < this.world.members; ++i) {
+				if (i == 0) {
+					console.log(`Group: ${String.fromCharCode(65 + g)}`);
+					group_curr = `${String.fromCharCode(65 + g)}`;
+				}
+				let id = this.world.indexOf(new Address(g, i));
+				console.log(`Group Index: ${i}, Node ID: ${id}`);
+				nest(status, ["groups", group_curr, i, "id"], id);
+				console.log(`Proposal: ${this.world.nodes[id].proposal}, Proposal Duration: ${this.world.nodes[id].proposalDuration}`);
+				nest(status, ["groups", group_curr, i, "proposal"], this.world.nodes[id].proposal);
+				nest(status, ["groups", group_curr, i, "proposalDuration"], this.world.nodes[id].proposalDuration);
+				console.log(`Node Final Vote: ${(this.world.nodes[id].table.finalVote() || []).map((v, i) => `${String.fromCharCode(65 + i)}: ${v}`).join('; ')}`);
+				nest(status, ["groups", group_curr, i, "finalVote"], (this.world.nodes[id].table.finalVote() || []).map((v, i) => `${String.fromCharCode(65 + i)}: ${v}`).join('; '));
+			}
+		}
+		nest(status, ["timeCount"], this.world.clock);
+		nest(status, ["groupsCount"], this.world.groups);
+		nest(status, ["membersCount"], this.world.members);
+		nest(status, ["nodesCount"], this.world.nodes.length);
+
+		console.log("Status: ", JSON.stringify(status, null, 2));
+		return status;
 	}
 }

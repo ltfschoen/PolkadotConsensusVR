@@ -13,7 +13,17 @@ import CylindricalPanel from 'CylindricalPanel';
 export default class CylindricalPanelCustom extends React.Component {
 	render() {
 		let { onStartRound, onStepRound, consensus } = this.props;
-		consensusAsStr = JSON.stringify(consensus);
+
+		// debugger;
+		consensusAsStr = "";
+		if (typeof consensus !== 'undefined' && consensus.length > 0) {
+			consensusAsStr = [
+				`Time: ${consensus[0]["timeCount"]}`,
+				`Groups: ${consensus[0]["groupsCount"]}`,
+				`Members: ${consensus[0]["membersCount"]}`,
+				`Nodes: ${consensus[0]["nodesCount"]}`
+			].join(", ");
+		}
 
 		let bufferWidthPx = 2000;
 		let bufferHeightPx = 720;
@@ -43,7 +53,7 @@ export default class CylindricalPanelCustom extends React.Component {
 					>
 						<ConsensusStatus
 							name={consensusAsStr}
-							x={150}
+							x={125}
 							y={40}
 							distanceFromCamera={-200}
 						/>

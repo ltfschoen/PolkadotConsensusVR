@@ -14,6 +14,7 @@ export default class Button extends React.Component {
 	}
 	render() {
 		let { onStartRound, onStepRound, name, x, y, z } = this.props;
+		let bgC = onStartRound ? '#00CCAA' : '#00CCDD';
 		return (
 			<VrButton
 				onClick={() => {
@@ -36,7 +37,7 @@ export default class Button extends React.Component {
 				}}
 			>
 				<Text style={{
-					backgroundColor: '#777879',
+					backgroundColor: bgC,
 					fontSize: 20,
 					fontWeight: '400',
 					borderRadius: 20,

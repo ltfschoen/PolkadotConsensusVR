@@ -3,14 +3,7 @@ import { ConsensusDemo } from './consensusDemo';
 
 class ConsensusApi {
 	static consensusDemo = new ConsensusDemo();
-	static consensus = [
-		{
-			clock: ConsensusApi.consensusDemo.world.clock,
-			groups: ConsensusApi.consensusDemo.world.groups,
-			members: ConsensusApi.consensusDemo.world.members,
-			nodes: ConsensusApi.consensusDemo.world.nodes.length
-		}
-	];
+	static consensus = [ConsensusApi.consensusDemo.status];
 
 	static getConsensus() {
 		return new Promise((resolve, reject) => {
@@ -27,12 +20,7 @@ class ConsensusApi {
 				ConsensusApi.consensusDemo.start()
 			}, delay);
 
-			let newConsensus = {
-				clock: ConsensusApi.consensusDemo.world.clock,
-				groups: ConsensusApi.consensusDemo.world.groups,
-				members: ConsensusApi.consensusDemo.world.members,
-				nodes: ConsensusApi.consensusDemo.world.nodes.length,
-			};
+			let newConsensus = ConsensusApi.consensusDemo.status;
 
 			ConsensusApi.consensus.splice(0, 1, newConsensus);
 
@@ -48,12 +36,7 @@ class ConsensusApi {
 			setTimeout(() => {
 				ConsensusApi.consensusDemo.tick();
 
-				let newConsensus = {
-					clock: ConsensusApi.consensusDemo.world.clock,
-					groups: ConsensusApi.consensusDemo.world.groups,
-					members: ConsensusApi.consensusDemo.world.members,
-					nodes: 50
-				};
+				let newConsensus = ConsensusApi.consensusDemo.status;
 
 				ConsensusApi.consensus.splice(0, 1, newConsensus);
 
