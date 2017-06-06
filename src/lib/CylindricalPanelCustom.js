@@ -43,18 +43,18 @@ export default class CylindricalPanelCustom extends React.Component {
 					>
 						<ConsensusStatus
 							name={consensusAsStr}
-							x={90}
+							x={150}
 							y={40}
 							distanceFromCamera={-200}
 						/>
 						<Button
 							onStartRound={onStartRound}
 							name="Start Round"
-							x={-200} y={20} z={0}/>
+							x={-140} y={20} z={0}/>
 						<Button
 							onStepRound={onStepRound}
 							name="Step Round"
-							x={-200} y={0} z={0}/>
+							x={-140} y={0} z={0}/>
 						<Image
 							style={{
 								borderRadius: 20,
@@ -67,7 +67,7 @@ export default class CylindricalPanelCustom extends React.Component {
 									{rotateX : 0},
 									{rotateY : 0},
 									{rotateZ : 0},
-									{translate: [-255, -70, -180]},
+									{translate: [-195, -70, -180]},
 									{scale : 0.25 }
 								]
 							}}
