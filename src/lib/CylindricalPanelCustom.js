@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
 	asset,
 	View,
@@ -7,10 +8,14 @@ import {
 } from 'react-vr';
 import Button from './Button';
 import LotsOfGreetings from './LotsOfGreetings';
+import Greeting from './Greeting';
 import CylindricalPanel from 'CylindricalPanel';
 
 export default class CylindricalPanelCustom extends React.Component {
 	render() {
+		let { skills } = this.props;
+		skillsAsStr = JSON.stringify(skills);
+
 		let bufferWidthPx = 2000;
 		let bufferHeightPx = 720;
 		let numberOfPxForACompleteTurn = 2000;
@@ -36,6 +41,10 @@ export default class CylindricalPanelCustom extends React.Component {
 						justifyContent: 'center',
 					}}
 				>
+					<Greeting
+						name={skillsAsStr}
+						distanceFromCamera={-200}
+					/>
 					{/*<LotsOfGreetings />*/}
 					{/*<Image*/}
 						{/*style={{*/}
@@ -96,3 +105,7 @@ export default class CylindricalPanelCustom extends React.Component {
 		);
 	}
 }
+
+CylindricalPanelCustom.propTypes = {
+	skills: PropTypes.array.isRequired
+};

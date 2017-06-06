@@ -5,6 +5,7 @@ import {
 
 export default class Greeting extends React.Component {
 	render() {
+		let { distanceFromCamera } = this.props; // i.e. -3
 		return (
 			<Text style={{
 				backgroundColor: '#777879',
@@ -16,7 +17,7 @@ export default class Greeting extends React.Component {
 				paddingRight: 0.2,
 				textAlign: 'center',
 				textAlignVertical: 'center',
-				transform: [{translate: [0, 0, -3]}],
+				transform: [{translate: [0, 0, distanceFromCamera]}],
 			}}>
 				Hello {this.props.name}!
 			</Text>
