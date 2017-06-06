@@ -6,7 +6,7 @@ import {
   Text,
   View,
 } from 'react-vr';
-import DNAStrand from "./src/DNAStrand";
+import ConsensusApp from "./src/ConsensusApp";
 
 // Redux Actions
 import {loadConsensus} from './redux/actions/consensusActions';
@@ -23,7 +23,7 @@ export default class PolkadotConsensusVR extends React.Component {
       <Provider store={store}>
         <View>
           <Pano source={asset('storm_960_720.jpg')}/>
-          <DNAStrand />
+          <ConsensusApp />
         </View>
       </Provider>
     );

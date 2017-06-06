@@ -3,14 +3,16 @@ import PropTypes from 'prop-types';
 import {
 	asset,
 	View,
-	Cylinder,
 	Image
 } from 'react-vr';
-import Button from './Button';
-import ConsensusStatus from './ConsensusStatus';
 import CylindricalPanel from 'CylindricalPanel';
 
+import Button from './Button';
+import ConsensusStatus from './ConsensusStatus';
+import ProposalChain from './ProposalChain';
+
 export default class CylindricalPanelCustom extends React.Component {
+
 	render() {
 		let { onStartRound, onStepRound, consensus } = this.props;
 
@@ -23,6 +25,31 @@ export default class CylindricalPanelCustom extends React.Component {
 				`Members: ${consensus[0]["membersCount"]}`,
 				`Nodes: ${consensus[0]["nodesCount"]}`
 			].join(", ");
+		}
+
+		let consensusProposalChains = [];
+		if (typeof consensus !== 'undefined' && consensus.length > 0) {
+			let i = 0;
+			// i.e. "A": { ...
+			for (let group in consensus[0]["groups"]) {
+				let nodeId, proposalId, proposalDuration, finalVote = null;
+				// i.e. "A": { "0": { ...
+				for (let groupAddress in consensus[0]["groups"][group]) {
+					nodeId = consensus[0]["groups"][group][groupAddress]["id"];
+					proposalId = consensus[0]["groups"][group][groupAddress]["proposal"];
+					proposalDuration = consensus[0]["groups"][group][groupAddress]["proposalDuration"];
+					finalVote = consensus[0]["groups"][group][groupAddress]["finalVote"];
+				}
+				consensusProposalChains.push(
+					<ProposalChain
+						key={i}
+						proposalDuration={proposalDuration * 100 || 300} // proposalDuration is 0 to 3
+						yRotate={85}
+						zOffset={-120 + 40 * i}
+					/>
+				);
+				i++;
+			}
 		}
 
 		let bufferWidthPx = 2000;
@@ -82,50 +109,10 @@ export default class CylindricalPanelCustom extends React.Component {
 								]
 							}}
 
-							// source={{
-							// 	uri: 'https://facebook.github.io/react/img/logo_og.png',
-							// }}
+							// source={{ uri: 'https://facebook.github.io/react/img/logo_og.png', }}
 							source={asset('storm_960_720.jpg')}
 						/>
-						<Cylinder
-							radiusTop={10}
-							radiusBottom={10}
-							dimHeight={500}
-							segments={12}
-							texture={asset('dna_black.png')}
-							lit={true}
-							wireframe={false}
-							style={{
-								// position: 'absolute',
-								transform: [
-									{rotateX : 0},
-									{rotateY : -85},
-									{rotateZ : 30},
-									{translate: [-200, 50, 0]},
-									{scale : 1.0 }
-								],
-							}}
-						/>
-						<Cylinder
-							radiusTop={10}
-							radiusBottom={10}
-							dimHeight={500}
-							segments={12}
-							texture={asset('dna_black.png')}
-							lit={false}
-							wireframe={false}
-							style={{
-								// position: 'relative',
-								transform: [
-									{rotateX : 0},
-									{rotateY : 85}, // vert rotate
-									{rotateZ : -30}, // tip away
-									{translate: [0, 50, 100]}, // horiz shift, vert shift, ?
-									{scale : 1.0 }
-								],
-								layoutOrigin: [0.5, 0.5]
-							}}
-						/>
+						{consensusProposalChains}
 					</View>
 				</CylindricalPanel>
 			</View>
@@ -134,7 +121,7 @@ export default class CylindricalPanelCustom extends React.Component {
 }
 
 CylindricalPanelCustom.propTypes = {
-	onStartRound: React.PropTypes.func.isRequired,
-	onStepRound: React.PropTypes.func.isRequired,
+	onStartRound: PropTypes.func.isRequired,
+	onStepRound: PropTypes.func.isRequired,
 	consensus: PropTypes.array.isRequired
 };

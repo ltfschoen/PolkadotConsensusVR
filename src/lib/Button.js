@@ -55,7 +55,7 @@ export default class Button extends React.Component {
 }
 
 Button.propTypes = {
-	onStartRound: React.PropTypes.func,
-	onStepRound: React.PropTypes.func,
+	onStartRound: PropTypes.func,
+	onStepRound: PropTypes.func,
 	name: PropTypes.string
 };
