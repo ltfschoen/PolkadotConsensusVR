@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
-import skills from './skillReducer';
+import consensus from './consensusReducer';
 
 const rootReducer = combineReducers({
-	skills: skills
+	consensus: consensus
 });
 
 export default rootReducer;

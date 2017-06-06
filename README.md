@@ -26,4 +26,4 @@
 
 * Screenshots
 
-    ![alt tag](https://raw.githubusercontent.com/ltfschoen/PolkadotConsensusVR/master/screenshots/screenshot0002.png)
+    ![alt tag](https://raw.githubusercontent.com/ltfschoen/PolkadotConsensusVR/master/screenshots/screenshot0003.png)

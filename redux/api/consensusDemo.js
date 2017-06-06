@@ -411,7 +411,7 @@ class World {
 	}
 }
 
-export class Consensus {
+export class ConsensusDemo {
 	constructor () {
 		this.world = new World();
 		this.start();
@@ -419,9 +419,11 @@ export class Consensus {
 
 	start() {
 		this.world.startRound();
+		return true;
 	}
 
 	tick() {
 		this.world.tickRound();
+		return true;
 	}
 }

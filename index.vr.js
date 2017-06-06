@@ -9,13 +9,13 @@ import {
 import DNAStrand from "./src/DNAStrand";
 
 // Redux Actions
-import {loadSkills} from './redux/actions/skillActions';
+import {loadConsensus} from './redux/actions/consensusActions';
 
 // Redux Store
 import configureStore from './redux/store/configureStore.dev';
 import {Provider} from 'react-redux';
 const store = configureStore();
-store.dispatch(loadSkills());
+store.dispatch(loadConsensus());
 
 export default class PolkadotConsensusVR extends React.Component {
   render() {

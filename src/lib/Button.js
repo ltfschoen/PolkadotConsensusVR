@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
+	Text,
 	Image
 } from 'react-vr';
 
@@ -11,11 +13,19 @@ export default class Button extends React.Component {
 		this.state = {open: false};
 	}
 	render() {
-		let { x, y, z } = this.props;
+		let { onStartRound, onStepRound, name, x, y, z } = this.props;
 		return (
 			<VrButton
 				onClick={() => {
 					this.setState({open: !this.state.open});
+					setTimeout(() => { this.setState({open: !this.state.open}); }, 2.0);
+					if (onStartRound) {
+						console.log("Clicked Start Round");
+						onStartRound();
+					} else if (onStepRound) {
+						console.log("Clicked Step Round");
+						onStepRound();
+					}
 				}}
 				style={{
 					// position: 'absolute',
@@ -25,17 +35,26 @@ export default class Button extends React.Component {
 					],
 				}}
 			>
-				<Image
-					style={{
-						borderRadius: 20,
-						height: this.state.open ? 66 : 60,
-						margin: 10,
-						width: this.state.open ? 132 : 120}}
-					source={{
-						uri: 'https://facebook.github.io/react/img/logo_og.png',
-					}}
-				/>
+				<Text style={{
+					backgroundColor: '#777879',
+					fontSize: 20,
+					fontWeight: '400',
+					borderRadius: 20,
+					layoutOrigin: [0.5, 0.5],
+					paddingLeft: this.state.open ? 12 : 8,
+					paddingRight: this.state.open ? 12 : 8,
+					textAlign: 'center',
+					textAlignVertical: 'center',
+				}}>
+					{name}
+				</Text>
 			</VrButton>
 		);
 	}
 }
+
+Button.propTypes = {
+	onStartRound: React.PropTypes.func,
+	onStepRound: React.PropTypes.func,
+	name: PropTypes.string
+};
