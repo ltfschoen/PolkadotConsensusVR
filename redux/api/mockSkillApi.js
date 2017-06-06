@@ -1,4 +1,5 @@
 import delay from './delay';
+import consensus from './main';
 
 const skills = [
 	{
