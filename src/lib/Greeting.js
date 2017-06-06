@@ -19,7 +19,7 @@ export default class Greeting extends React.Component {
 				textAlignVertical: 'center',
 				transform: [{translate: [0, 0, distanceFromCamera]}],
 			}}>
-				Hello {this.props.name}!
+				{this.props.name}
 			</Text>
 		);
 	}

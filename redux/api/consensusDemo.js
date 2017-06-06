@@ -409,49 +409,19 @@ class World {
 		console.log(`${from} => ${to}:`, msg);
 		this.nodes[to].incoming.push(msg);
 	}
+}
 
-	render() {
-		let h = `<div style="float: left"><div>Time: ${this.clock}</div>`;
-		h += `<table cellspacing=0 cellpadding=10>`;
-		h += `<th><td></td><td>ID</td><td>Proposal</td><td>Ready</td><td>Final</td></th>`;
-		for (let g = 0; g < this.groups; ++g) {
-			for (let i = 0; i < this.members; ++i) {
-				h += `<tr>`;
-				if (i == 0) {
-					h += `<td rowspan="${this.members}" style="background: #eee">${String.fromCharCode(65 + g)}</td>`;
-				}
-				let id = this.indexOf(new Address(g, i));
-				h += `<td style="background: #eee">${i}</td>${this.nodes[id].render()}`;
-				h += `<td>`;
-				for (let g = 0; g < this.groups; ++g) {
-					for (let i = 0; i < this.members; ++i) {
-					}
-				}
-				h += `</td>`;
-				h += `</tr>`;
-			}
-		}
-		h += '</table>';
-		h += '</div>';
-		return h;
+export class Consensus {
+	constructor () {
+		this.world = new World();
+		this.start();
+	}
+
+	start() {
+		this.world.startRound();
+	}
+
+	tick() {
+		this.world.tickRound();
 	}
 }
-
-window.world = new World();
-window.world.startRound();
-
-function start() {
-	window.world.startRound();
-	update();
-}
-
-function tick() {
-	window.world.tickRound();
-	update();
-}
-
-function update() {
-	document.getElementById('app').innerHTML = window.world.render();
-}
-
-update();

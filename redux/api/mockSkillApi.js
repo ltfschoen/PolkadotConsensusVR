@@ -1,17 +1,25 @@
 import delay from './delay';
-import consensus from './main';
+import { Consensus } from './consensusDemo';
+
+let consensus = new Consensus();
 
 const skills = [
 	{
-		id: 'react',
-		skillName: 'react',
-		userId: 'luke-schoen'
-	},
-	{
-		id: 'node',
-		skillName: 'node',
-		userId: 'fake-user'
+		clock: consensus.world.clock,
+		groups: consensus.world.groups,
+		members: consensus.world.members,
+		nodes: consensus.world.nodes.length
 	}
+	// {
+	// 	id: 'react',
+	// 	skillName: 'react',
+	// 	userId: 'luke-schoen'
+	// },
+	// {
+	// 	id: 'node',
+	// 	skillName: 'node',
+	// 	userId: 'fake-user'
+	// }
 ];
 
 const generateId = (skill) => {
