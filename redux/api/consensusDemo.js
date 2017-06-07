@@ -456,10 +456,25 @@ export class ConsensusDemo {
 				console.log(`Group Index: ${i}, Node ID: ${id}`);
 				nest(status, ["groups", group_curr, i, "id"], id);
 				console.log(`Proposal: ${this.world.nodes[id].proposal}, Proposal Duration: ${this.world.nodes[id].proposalDuration}`);
-				nest(status, ["groups", group_curr, i, "proposal"], this.world.nodes[id].proposal);
+				nest(status, ["groups", group_curr, i, "proposal"], this.world.nodes[id].proposal || []);
 				nest(status, ["groups", group_curr, i, "proposalDuration"], this.world.nodes[id].proposalDuration);
-				console.log(`Node Final Vote: ${(this.world.nodes[id].table.finalVote() || []).map((v, i) => `${String.fromCharCode(65 + i)}: ${v}`).join('; ')}`);
-				nest(status, ["groups", group_curr, i, "finalVote"], (this.world.nodes[id].table.finalVote() || []).map((v, i) => `${String.fromCharCode(65 + i)}: ${v}`).join('; '));
+
+				let finalVotes = {};
+				let finalVoteTable = this.world.nodes[id].table.finalVote() || [];
+				if (typeof finalVoteTable !== 'undefined' && finalVoteTable.length > 0) {
+					let i = 0; // elements may be null so cannot [index, element]
+					for (const element of finalVoteTable) {
+						if (element) {
+							finalVotes[`${String.fromCharCode(65 + i)}`] = element;
+						} else {
+							finalVotes[`${String.fromCharCode(65 + i)}`] = "";
+						}
+						i++;
+					}
+				}
+				nest(status, ["groups", group_curr, i, "finalVote"], JSON.stringify(finalVotes));
+				// console.log(`Node Final Vote: ${(this.world.nodes[id].table.finalVote() || []).map((v, i) => `${String.fromCharCode(65 + i)}: ${v}`).join('; ')}`);
+				// nest(status, ["groups", group_curr, i, "finalVote"], (this.world.nodes[id].table.finalVote() || []).map((v, i) => `${String.fromCharCode(65 + i)}: ${v}`).join('; '));
 			}
 		}
 		nest(status, ["timeCount"], this.world.clock);

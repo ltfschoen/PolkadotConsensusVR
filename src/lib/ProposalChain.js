@@ -5,6 +5,7 @@ import {
 	View,
 	Cylinder
 } from 'react-vr';
+import TextLabel from './TextLabel';
 
 export default class ProposalChain extends React.Component {
 	constructor(props) {
@@ -12,7 +13,17 @@ export default class ProposalChain extends React.Component {
 	}
 
 	render() {
-		let { proposalDuration, yRotate, zOffset } = this.props;
+		let {
+			proposalDuration,
+			yRotate,
+			zOffset,
+			group,
+			groupAddresses,
+			nodeIds,
+			proposalIds,
+			finalVote
+		} = this.props;
+
 		return (
 			<View>
 				<Cylinder
@@ -24,17 +35,29 @@ export default class ProposalChain extends React.Component {
 					lit={true}
 					wireframe={false}
 					style={{
-						// position: 'absolute', // 'relative'
+						position: 'absolute', // 'relative'
 						transform: [
-							{rotateX : 0},
+							{rotateX : 50},
 							{rotateY : yRotate}, // 85 / -85 // vert rotate
-							{rotateZ : -30}, // -30 / 30 // tip away
+							{rotateZ : -40}, // -30 / 30 // tip away
 							// away shift, vert shift, side shift
-							{translate: [0, 50, zOffset]}, // [0, 50, 0] / [0, 50, -40]
+							{translate: [50, 90, zOffset]}, // [0, 50, 0] / [0, 50, -40]
 							{scale : 1.0 }
 						],
 					}}
-				/>
+				>
+					<TextLabel
+						proposalDuration={proposalDuration}
+						group={group}
+						groupAddresses={groupAddresses}
+						nodeIds={nodeIds}
+						proposalIds={proposalIds}
+					/>
+					<TextLabel
+						finalVote={finalVote}
+					/>
+				</Cylinder>
+
 			</View>
 		);
 	}
@@ -43,5 +66,10 @@ export default class ProposalChain extends React.Component {
 ProposalChain.propTypes = {
 	proposalDuration: PropTypes.number,
 	yRotate: PropTypes.number,
-	zOffset: PropTypes.number
+	zOffset: PropTypes.number,
+	group: PropTypes.string,
+	groupAddresses: PropTypes.string,
+	nodeIds: PropTypes.string,
+	proposalIds: PropTypes.string,
+	finalVote: PropTypes.string
 };
