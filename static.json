@@ -1,0 +1,5 @@
+{
+  "root": "vr/build/",
+  "clean_urls": false,
+  "https_only": true
+}
